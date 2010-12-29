@@ -1,6 +1,6 @@
 # Media
 
-*Taking advantage of the Kohana CFS for service media files.*
+*Taking advantage of the Kohana CFS to serve media files.*
 
 - **Module Version:** 0.1.0
 - **Module URL:** <https://github.com/Zeelot/kohana-media>
