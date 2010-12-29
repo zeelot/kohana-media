@@ -14,4 +14,6 @@ return array(
 	),
 	// The public accessible directory
 	'public_dir' => DOCROOT.'media/ko',
+	// Write the files to the public directory when in production
+	'cache'      => Kohana::$environment === Kohana::PRODUCTION,
 );

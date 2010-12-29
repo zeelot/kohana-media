@@ -23,17 +23,20 @@ class Controller_Media extends Controller {
 			// Send the file content as the response
 			$this->request->response = file_get_contents($cfs_file);
 
-			// Save the contents to the public directory for future requests
-			$public = $this->config->public_dir.'/'.$file.$sep.$hash.'.'.$ext;
-			$directory = dirname($public);
-
-			if ( ! is_dir($directory))
+			if ($this->config->cache)
 			{
-				// Recursively create the directories needed for the file
-				mkdir($directory.'/', 0777, TRUE);
-			}
+				// Save the contents to the public directory for future requests
+				$public = $this->config->public_dir.'/'.$file.$sep.$hash.'.'.$ext;
+				$directory = dirname($public);
 
-			file_put_contents($public, $this->request->response);
+				if ( ! is_dir($directory))
+				{
+					// Recursively create the directories needed for the file
+					mkdir($directory.'/', 0777, TRUE);
+				}
+
+				file_put_contents($public, $this->request->response);
+			}
 		}
 		else
 		{
