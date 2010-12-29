@@ -6,11 +6,11 @@ return array(
 		// Pattern to match the file path (without extension)
 		'file' => '([a-zA-Z\/\.])+',
 		// Match the separator between file and hash
-		'sep'  => '([\-]{1})',
+		'sep'  => '([\-])',
 		// Match the hash that is not part of the media file
-		'hash' => '([a-zA-Z\d])+',
+		'hash' => '([a-zA-Z0-9\.])+(?=[\.]{1}[a-zA-Z\d]+$)',
 		// Match the file extension (without the dot)
-		'ext'  => '([a-zA-Z\d]+)$',
+		'ext'  => '([a-zA-Z0-9]+)$',
 	),
 	// The public accessible directory
 	'public_dir' => DOCROOT.'media/ko',
