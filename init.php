@@ -1,7 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Route::set('media', 'media/ko/<file>', array('file' => '.*'))
+$config = Kohana::config('media');
+
+Route::set('media', $config->route, $config->regex)
 	->defaults(array(
 		'controller' => 'media',
 		'action'     => 'serve',
 	));
+
+unset($config);

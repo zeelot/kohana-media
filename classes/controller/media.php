@@ -13,22 +13,18 @@ class Controller_Media extends Controller {
 
 	public function action_serve()
 	{
-		// Get the file path from the request
 		$file = $this->request->param('file');
+		$sep = $this->request->param('sep');
+		$hash = $this->request->param('hash');
+		$ext = $this->request->param('ext');
 
-		// Find the file extension
-		$ext = pathinfo($file, PATHINFO_EXTENSION);
-
-		// Remove the extension from the filename
-		$filename = substr($file, 0, -(strlen($ext) + 1));
-
-		if ($path = Kohana::find_file($this->config->cfs_dir, $filename, $ext))
+		if ($cfs_file = Kohana::find_file('media', $file, $ext))
 		{
 			// Send the file content as the response
-			$this->request->response = file_get_contents($path);
+			$this->request->response = file_get_contents($cfs_file);
 
 			// Save the contents to the public directory for future requests
-			$public = $this->config->public_dir.'/'.$file;
+			$public = $this->config->public_dir.'/'.$file.$sep.$hash.'.'.$ext;
 			$directory = dirname($public);
 
 			if ( ! is_dir($directory))
@@ -37,17 +33,18 @@ class Controller_Media extends Controller {
 				mkdir($directory.'/', 0777, TRUE);
 			}
 
-			file_put_contents($this->config->public_dir.'/'.$file, $this->request->response);
+			file_put_contents($public, $this->request->response);
 		}
 		else
 		{
+			die('here');
 			// Return a 404 status
 			$this->request->status = 404;
 		}
 
 		// Set the proper headers to allow caching
 		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
-		$this->request->headers['Content-Length'] = filesize($path);
-		$this->request->headers['Last-Modified']  = date('r', filemtime($path));
+		$this->request->headers['Content-Length'] = filesize($cfs_file);
+		$this->request->headers['Last-Modified']  = date('r', filemtime($cfs_file));
 	}
 }
