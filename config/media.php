@@ -8,7 +8,7 @@ return array(
 		// Match the separator between file and hash
 		'sep'  => '([\-])',
 		// Match the hash that is not part of the media file
-		'hash' => '([a-zA-Z0-9\.])+(?=[\.]{1}[a-zA-Z\d]+$)',
+		'hash' => '([a-zA-Z0-9\.])+(?=[\.][a-zA-Z0-9]+$)',
 		// Match the file extension (without the dot)
 		'ext'  => '([a-zA-Z0-9]+)$',
 	),
