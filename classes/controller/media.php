@@ -37,7 +37,6 @@ class Controller_Media extends Controller {
 		}
 		else
 		{
-			die('here');
 			// Return a 404 status
 			$this->request->status = 404;
 		}
