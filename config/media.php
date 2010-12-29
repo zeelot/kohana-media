@@ -10,7 +10,7 @@ return array(
 		// Match the hash that is not part of the media file
 		'hash' => '([a-zA-Z\d])+',
 		// Match the file extension (without the dot)
-		'ext'  => '([a-zA-Z\d]{3})$',
+		'ext'  => '([a-zA-Z\d]+)$',
 	),
 	// The public accessible directory
 	'public_dir' => DOCROOT.'media/ko',
