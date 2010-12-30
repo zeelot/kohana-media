@@ -18,35 +18,32 @@ class Controller_Media extends Controller {
 		$hash = $this->request->param('hash');
 		$ext = $this->request->param('ext');
 
-		if ($cfs_file = Kohana::find_file('media', $file, $ext))
-		{
-			// Send the file content as the response
-			$this->request->response = file_get_contents($cfs_file);
+		$cfs_file = Kohana::find_file('media', $file, $ext);
 
-			if ($this->config->cache)
+		if ( ! $cfs_file)
+			throw new Kohana_Http_Exception_404;
+
+		// Send the file content as the response
+		$this->response->body(file_get_contents($cfs_file));
+
+		if ($this->config->cache)
+		{
+			// Save the contents to the public directory for future requests
+			$public = $this->config->public_dir.'/'.$file.$sep.$hash.'.'.$ext;
+			$directory = dirname($public);
+
+			if ( ! is_dir($directory))
 			{
-				// Save the contents to the public directory for future requests
-				$public = $this->config->public_dir.'/'.$file.$sep.$hash.'.'.$ext;
-				$directory = dirname($public);
-
-				if ( ! is_dir($directory))
-				{
-					// Recursively create the directories needed for the file
-					mkdir($directory.'/', 0777, TRUE);
-				}
-
-				file_put_contents($public, $this->request->response);
+				// Recursively create the directories needed for the file
+				mkdir($directory.'/', 0777, TRUE);
 			}
-		}
-		else
-		{
-			// Return a 404 status
-			$this->request->status = 404;
+
+			file_put_contents($public, $this->request->response);
 		}
 
 		// Set the proper headers to allow caching
-		$this->request->headers['Content-Type']   = File::mime_by_ext($ext);
-		$this->request->headers['Content-Length'] = filesize($cfs_file);
-		$this->request->headers['Last-Modified']  = date('r', filemtime($cfs_file));
+		$this->response->headers('Content-Type', (string) File::mime_by_ext($ext));
+		$this->response->headers('Content-Length', (string) filesize($cfs_file));
+		$this->response->headers('Last-Modified', (string) date('r', filemtime($cfs_file)));
 	}
 }
