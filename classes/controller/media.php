@@ -15,7 +15,7 @@ class Controller_Media extends Controller {
 	{
 		$file = $this->request->param('file');
 		$sep = $this->request->param('sep');
-		$hash = $this->request->param('hash');
+		$uid = $this->request->param('uid');
 		$ext = $this->request->param('ext');
 
 		if ($cfs_file = Kohana::find_file('media', $file, $ext))
@@ -26,7 +26,7 @@ class Controller_Media extends Controller {
 			if ($this->config->cache)
 			{
 				// Save the contents to the public directory for future requests
-				$public = $this->config->public_dir.'/'.$file.$sep.$hash.'.'.$ext;
+				$public = $this->config->public_dir.'/'.$file.$sep.$uid.'.'.$ext;
 				$directory = dirname($public);
 
 				if ( ! is_dir($directory))

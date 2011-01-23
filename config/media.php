@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
-	'route' => 'media/ko/<file>(<sep><hash>).<ext>',
+	'route' => 'media/ko/<file>(<sep><uid>).<ext>',
 	'regex' => array(
 		/**
 		 * Pattern to match the file path (without extension)
@@ -12,8 +12,8 @@ return array(
 		'file' => '(.*?)((?=(\.([a-zA-Z0-9]+)$))|(?=\/(?=([0-9]+\.){3})))',
 		// Match the separator between file and hash
 		'sep'  => '([\/])(?=([0-9]+\.){3})',
-		// Match the hash that is not part of the media file
-		'hash' => '([a-zA-Z0-9\.])+(?=[\.][a-zA-Z0-9]+$)',
+		// Match the unique string that is not part of the media file
+		'uid' => '([a-zA-Z0-9\.])+(?=[\.][a-zA-Z0-9]+$)',
 		// Match the file extension (without the dot)
 		'ext'  => '([a-zA-Z0-9]+)$',
 	),
