@@ -1,24 +1,17 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
-	'route' => 'media/ko/<file>(<sep><uid>).<ext>',
+	'route' => 'media/(<uid>/)kohana/<filepath>',
 	'regex' => array(
 		/**
-		 * Pattern to match the file path (without extension)
-		 * This pattern will match any file path until one of the following:
-		 * - an extension is found
-		 * - a forward slash is found, followed by a version number (#.#.#) where # is one or more digits
+		 * Pattern to match the file path
 		 */
-		'file' => '(.*?)((?=(\.([a-zA-Z0-9]+)$))|(?=\/(?=([0-9]+\.){3})))',
-		// Match the separator between file and hash
-		'sep'  => '([\/])(?=([0-9]+\.){3})',
+		'filepath' => '.*',
 		// Match the unique string that is not part of the media file
-		'uid' => '([a-zA-Z0-9\.])+(?=[\.][a-zA-Z0-9]+$)',
-		// Match the file extension (without the dot)
-		'ext'  => '([a-zA-Z0-9]+)$',
+		'uid' => '.*?',
 	),
-	// The public accessible directory
-	'public_dir' => DOCROOT.'media/ko',
+	// The public accessible directory where the file will be copied
+	'public_dir' => DOCROOT.'media/<uid>/kohana/<filepath>',
 	// Write the files to the public directory when in production
 	'cache'      => Kohana::$environment === Kohana::PRODUCTION,
 );
