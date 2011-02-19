@@ -29,7 +29,7 @@ class Controller_Media extends Controller {
 			// Save the contents to the public directory for future requests
 			$public = strtr($this->config->public_dir, array(
 				'<uid>/'    => $uid ? $uid.'/' : '',
-				'<filename' => $filepath,
+				'<filepath>' => $filepath,
 			));
 			$directory = dirname($public);
 
