@@ -21,8 +21,6 @@ class Controller_Media extends Controller {
 		if ( ! $cfs_file)
 			throw new Kohana_Http_Exception_404;
 
-		$this->request->check_cache(sha1($this->request->uri()).filemtime($cfs_file));
-
 		// Send the file content as the response
 		$this->response->body(file_get_contents($cfs_file));
 
