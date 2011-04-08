@@ -39,7 +39,7 @@ class Controller_Media extends Controller {
 				mkdir($directory.'/', 0777, TRUE);
 			}
 
-			file_put_contents($public, $this->request->response);
+			file_put_contents($public, $this->response->body());
 		}
 
 		// Set the proper headers to allow caching
