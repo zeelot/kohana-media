@@ -8,7 +8,7 @@ class Controller_Media extends Controller {
 	{
 		parent::before();
 
-		$this->config = Kohana::config('media');
+		$this->config = Kohana::$config->load('media');
 	}
 
 	public function action_serve()
