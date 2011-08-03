@@ -6,7 +6,7 @@ class Media_Core {
 	{
 		return Route::url('media', array(
 			'filepath' => $filepath,
-			'uid'      => Kohana::config('media')->uid,
+			'uid'      => Kohana::$config->load('media')->uid,
 		));
 	}
 }
