@@ -1,6 +1,6 @@
 # Media Module
 
-The media module takes advantage of Kohana's Cascading Filesystem to server media files of any kind.  It does not focus on compressing, concatinating, or compiling files.
+The media module takes advantage of Kohana's Cascading Filesystem to serve media files of any kind.  It does not focus on compressing, concatinating, or compiling files.
 
 # Packaged media files with modules
 
