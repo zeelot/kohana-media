@@ -9,4 +9,12 @@ class Media_Core {
 			'uid'      => Kohana::$config->load('media')->uid,
 		));
 	}
+
+	public static function uri($filepath)
+	{
+		return Route::get('media')->uri(array(
+			'filepath' => $filepath,
+			'uid'      => Kohana::$config->load('media')->uid,
+		));
+	}
 }
