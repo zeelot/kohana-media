@@ -19,7 +19,7 @@ class Controller_Media extends Controller {
 		$cfs_file = Kohana::find_file('media', $filepath, FALSE);
 
 		if ( ! $cfs_file)
-			throw new Kohana_Http_Exception_404;
+			throw HTTP_Exception::factory(404);
 
 		// Send the file content as the response
 		$this->response->body(file_get_contents($cfs_file));
