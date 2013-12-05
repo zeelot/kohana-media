@@ -5,6 +5,6 @@ Route::set('media', 'media/(<uid>/)kohana/<filepath>', array(
 		'uid' => '.*?',     // Match the unique string that is not part of the media file
 	))
 	->defaults(array(
-		'controller' => 'media',
+		'controller' => 'Media',
 		'action'     => 'serve',
 	));
