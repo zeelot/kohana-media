@@ -21,8 +21,21 @@ class Controller_Media extends Controller {
 		if ( ! $cfs_file)
 			throw HTTP_Exception::factory(404);
 
-		// Send the file content as the response
-		$this->response->body(file_get_contents($cfs_file));
+		// http://www.webscalingblog.com/performance/caching-http-headers-last-modified-and-etag.html
+		// Required header when using Last-Modified caching
+		$this->response->headers('Cache-Control', 'must-revalidate');
+
+		$date = date('r', filemtime($cfs_file));
+
+		if ($this->request->headers('If-Modified-Since') === $date)
+		{
+			// Matching modified date, abort the request
+			$this->response->status(304);
+			return;
+		}
+
+		// Load the file content for caching and output
+		$contents = file_get_contents($cfs_file);
 
 		if ($this->config->cache)
 		{
@@ -39,12 +52,23 @@ class Controller_Media extends Controller {
 				mkdir($directory.'/', 0777, TRUE);
 			}
 
-			file_put_contents($public, $this->response->body());
+			file_put_contents($public, $contents);
+
+			// We just updated the file, make sure the proper date is sent
+			$date = date('r');
 		}
 
+		$mime = File::mime_by_ext(pathinfo($cfs_file, PATHINFO_EXTENSION));
+		$size = filesize($cfs_file);
+
 		// Set the proper headers to allow caching
-		$this->response->headers('Content-Type', (string) File::mime_by_ext(pathinfo($cfs_file, PATHINFO_EXTENSION)));
-		$this->response->headers('Content-Length', (string) filesize($cfs_file));
-		$this->response->headers('Last-Modified', (string) date('r', filemtime($cfs_file)));
+		$this->response->headers('Last-Modified', $date);
+		$this->response->headers('Content-Type', (string) $mime);
+		$this->response->headers('Content-Length', (string) $size);
+
+		// Send the file content as the response
+		$this->response->body($contents);
 	}
 }
+
+
