@@ -1,0 +1,32 @@
+{
+	"name":        "zeelot/kohana-media",
+	"description": "Using the Kohana cascading file system to serve media assets",
+	"homepage":    "https://github.com/Zeelot/kohana-media",
+	"license":     "BSD-3-Clause",
+	"keywords":    ["kohana", "framework", "media", "assets", "caching", "cfs", "files"],
+	"authors": [
+		{
+			"name":     "Lorenzo Pisani",
+			"email":    "zeelot3k@gmail.com",
+			"role":     "developer"
+		},
+		{
+			"name":     "Contributors",
+			"homepage": "https://github.com/Zeelot/kohana-media/graphs/contributors",
+			"role":     "contributor"
+		}
+	],
+	"support": {
+		"issues":   "https://github.com/Zeelot/kohana-media/issues"
+		"source":   "https://github.com/Zeelot/kohana-media"
+	},
+	"require": {
+		"kohana/core":         ">=3.3",
+		"php":                 ">=5.3.3"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-1.3/develop": "1.3.x-dev"
+		}
+	}
+}
