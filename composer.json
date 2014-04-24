@@ -17,7 +17,7 @@
 		}
 	],
 	"support": {
-		"issues":   "https://github.com/Zeelot/kohana-media/issues"
+		"issues":   "https://github.com/Zeelot/kohana-media/issues",
 		"source":   "https://github.com/Zeelot/kohana-media"
 	},
 	"require": {
