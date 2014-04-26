@@ -22,14 +22,21 @@ class Controller_Media extends Controller {
 			throw HTTP_Exception::factory(404);
 
 		// http://www.webscalingblog.com/performance/caching-http-headers-last-modified-and-etag.html
-		// Required header when using Last-Modified caching
-		$this->response->headers('Cache-Control', 'must-revalidate');
+		$size = (string) filesize($cfs_file);
+		$time = (string) filemtime($cfs_file);
 
-		$date = date('r', filemtime($cfs_file));
+		// ETag is used instead of Last-Modified because it removes the need
+		// for sending a `Cache-Control: must-revalidate` header. It is also
+		// slightly more reliable it adds the filesize as second variable.
+		//
+		// To reduce the size of the ETag, the hex value of a crc32 is used.
+		$etag = hash('crc32b', $size . '/' . $time);
 
-		if ($this->request->headers('If-Modified-Since') === $date)
+		if ($this->request->headers('If-None-Match') === $etag)
 		{
-			// Matching modified date, abort the request
+			// When the ETag matches, we abort the request by responding with
+			// 304 (Not Modified) status, which tells the browser to use the
+			// cached response.
 			$this->response->status(304);
 			return;
 		}
@@ -62,9 +69,9 @@ class Controller_Media extends Controller {
 		$size = filesize($cfs_file);
 
 		// Set the proper headers to allow caching
-		$this->response->headers('Last-Modified', $date);
 		$this->response->headers('Content-Type', (string) $mime);
 		$this->response->headers('Content-Length', (string) $size);
+		$this->response->headers('ETag', $etag);
 
 		// Send the file content as the response
 		$this->response->body($contents);
