@@ -1,5 +1,6 @@
 {
 	"name":        "zeelot/kohana-media",
+	"type":        "kohana-module",
 	"description": "Using the Kohana cascading file system to serve media assets",
 	"homepage":    "https://github.com/Zeelot/kohana-media",
 	"license":     "BSD-3-Clause",
